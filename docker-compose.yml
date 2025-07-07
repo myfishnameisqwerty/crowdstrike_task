@@ -1,0 +1,39 @@
+services:
+  data-scraper-service:
+    build: ./data-scraper-service
+    ports: ["9001:9001"]
+    container_name: data-scraper-service
+    volumes:
+      - ./common.py:/app/common.py:ro
+    networks:
+      - animal-network
+
+  image-downloader:
+    build: ./image-downloader
+    ports: ["9002:9002"]
+    container_name: image-downloader
+    volumes:
+      - /tmp:/tmp
+      - ./common.py:/app/common.py:ro
+    networks:
+      - animal-network
+
+  orchestrator:
+    build: ./orchestrator
+    ports: ["9003:9003"]
+    container_name: orchestrator
+    environment:
+      - DATA_SCRAPER_URL=http://data-scraper-service:9001
+      - IMAGE_DOWNLOADER_URL=http://image-downloader:9002
+    depends_on:
+      - data-scraper-service
+      - image-downloader
+    volumes:
+      - /tmp:/tmp
+      - ./common.py:/app/common.py:ro
+    networks:
+      - animal-network
+
+networks:
+  animal-network:
+    driver: bridge 
