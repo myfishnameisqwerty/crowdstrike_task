@@ -192,11 +192,11 @@ def download_single_image(download_request: DownloadRequest) -> Dict[str, Any]:
     logger.info(f"Received single download request for {download_request.name}")
         
     # Create a batch request with single item
-        batch_request = BatchDownloadRequest(
-        downloads=[download_request],
-        max_concurrent=1,
-        timeout_seconds=30  # Default timeout for single downloads
-        )
+    batch_request = BatchDownloadRequest(
+    downloads=[download_request],
+    max_concurrent=1,
+    timeout_seconds=30  # Default timeout for single downloads
+    )
         
     try:
         # Execute the download

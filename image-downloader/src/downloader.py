@@ -88,7 +88,7 @@ class ImageDownloader:
                 timeout=timeout_seconds,
                 stream=True
             )
-                    response.raise_for_status()
+            response.raise_for_status()
                     
             # Get file extension
             content_type: str = response.headers.get('content-type', '')
@@ -110,7 +110,7 @@ class ImageDownloader:
             
             logger.info(f"Successfully downloaded {download_request.name} to {final_target_path} ({file_size} bytes)")
                     
-                    return DownloadResult(
+            return DownloadResult(
                 image_url=download_request.image_url,
                 target_path=final_target_path,
                 is_successful=True,
@@ -121,7 +121,7 @@ class ImageDownloader:
         except requests.exceptions.Timeout:
             error_msg: str = f"Timeout downloading {download_request.name} from {download_request.image_url}"
             logger.error(error_msg)
-                    return DownloadResult(
+            return DownloadResult(
                 image_url=download_request.image_url,
                         target_path=target_path,
                 is_successful=False,
@@ -133,7 +133,7 @@ class ImageDownloader:
         except requests.exceptions.RequestException as e:
             error_msg: str = f"Request failed for {download_request.name}: {str(e)}"
             logger.error(error_msg)
-                    return DownloadResult(
+            return DownloadResult(
                 image_url=download_request.image_url,
                         target_path=target_path,
                 is_successful=False,
@@ -145,7 +145,7 @@ class ImageDownloader:
         except ValueError as e:
             error_msg: str = f"Invalid file format for {download_request.name}: {str(e)}"
             logger.error(error_msg)
-                    return DownloadResult(
+            return DownloadResult(
                 image_url=download_request.image_url,
                         target_path=target_path,
                 is_successful=False,
